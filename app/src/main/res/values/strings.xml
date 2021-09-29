@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GU Weather</string>
+    <string name="weather_api_key">a9e6daa0f2903b899493db568308f023</string>
+    <string name="weather_api_url">https://api.openweathermap.org/data/2.5/weather?zip=%s&amp;appid=%s</string>
+</resources>
