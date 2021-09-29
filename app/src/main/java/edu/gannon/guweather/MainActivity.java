@@ -2,6 +2,7 @@ package edu.gannon.guweather;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,12 +26,15 @@ public class MainActivity extends AppCompatActivity {
     Button btnGetWeather;
     EditText etZipcode;
     RequestQueue queue;
+    WeatherApi weatherApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Context context = getApplicationContext();
+        weatherApi = new OpenWeatherMapApi(context);
         tvTemperature  = findViewById(R.id.tvTemperature);
         etZipcode = findViewById(R.id.etZipcode);
         btnGetWeather = findViewById(R.id.btnGetWeather);
@@ -38,39 +42,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String zipCode = etZipcode.getText().toString();
-                getWeatherForZipCode(zipCode);
-            }
-        });
-
-        queue = Volley.newRequestQueue(this);
-    }
-
-    private void getWeatherForZipCode(String zipCode) {
-        String weather_api_url = getString(R.string.weather_api_url);
-        String weather_api_key = getString(R.string.weather_api_key);
-        String url = String.format(weather_api_url, zipCode, weather_api_key);
-        StringRequest stringRequest =
-                new StringRequest(Request.Method.GET, url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                Log.d("example.com response", response);
-                                try {
-                                    JSONObject weather = new JSONObject(response);
-                                    JSONObject main = weather.getJSONObject("main");
-                                    Double temperature = main.getDouble("temp");
-                                    Log.d("temperature", temperature.toString());
-                                    tvTemperature.setText(temperature + "");
-                                } catch (JSONException e) {
-                                    Log.d("weatherrequestexception", e.toString());
-                                }
-                            }
-                        }, new Response.ErrorListener() {
+                weatherApi.getWeatherForZipCode(zipCode, new Callback() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-
+                    public void execute(double response) {
+                        int temperature = (int) (response - 273);
+                        tvTemperature.setText(temperature + "");
                     }
                 });
-        queue.add(stringRequest);
+            }
+        });
     }
 }
