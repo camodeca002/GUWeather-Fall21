@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
+    // add this comment
     TextView tvTemperature;
     Button btnGetWeather;
     EditText etZipcode;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main); 
+        setContentView(R.layout.activity_main);
 
         Context context = getApplicationContext();
         weatherApi = new OpenWeatherMapApi(context);
