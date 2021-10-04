@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -46,9 +47,17 @@ public class MainActivity extends AppCompatActivity {
                 String zipCode = etZipcode.getText().toString();
                 weatherApi.getWeatherForZipCode(zipCode, new Callback() {
                     @Override
-                    public void execute(double response) {
+                    public void success(double response) {
                         int temperature = (int) (response - 273);
                         tvTemperature.setText(temperature + "");
+                    }
+
+                    @Override
+                    public void error(String errorMessage) {
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                        errorMessage,
+                                        Toast.LENGTH_LONG);
+                        toast.show();
                     }
                 });
             }

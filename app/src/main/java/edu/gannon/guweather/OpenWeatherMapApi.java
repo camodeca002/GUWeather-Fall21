@@ -48,7 +48,7 @@ public class OpenWeatherMapApi implements WeatherApi {
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        callback.error("A network error occurred");
                     }
                 });
         queue.add(stringRequest);
