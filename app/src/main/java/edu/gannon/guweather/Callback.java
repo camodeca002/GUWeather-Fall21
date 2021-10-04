@@ -1,5 +1,6 @@
 package edu.gannon.guweather;
 
 public interface Callback {
-    void execute(double response);
+    void success(double temperature);
+    void error(String errorMessage);
 }

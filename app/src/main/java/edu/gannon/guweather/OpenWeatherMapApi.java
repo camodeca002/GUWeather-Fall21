@@ -38,9 +38,10 @@ public class OpenWeatherMapApi implements WeatherApi {
                                     JSONObject main = weather.getJSONObject("main");
                                     Double temperature = main.getDouble("temp");
                                     Log.d("temperature", temperature.toString());
-                                    callback.execute(temperature);
+                                    callback.success(temperature);
                                     // tvTemperature.setText(temperature + "");
                                 } catch (JSONException e) {
+                                    callback.error(e.toString());
                                     Log.d("weatherrequestexception", e.toString());
                                 }
                             }

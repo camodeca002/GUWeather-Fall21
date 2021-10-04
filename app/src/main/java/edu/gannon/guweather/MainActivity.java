@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         tvTemperature  = findViewById(R.id.tvTemperature);
         etZipcode = findViewById(R.id.etZipcode);
         btnGetWeather = findViewById(R.id.btnGetWeather);
+
         btnGetWeather.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
