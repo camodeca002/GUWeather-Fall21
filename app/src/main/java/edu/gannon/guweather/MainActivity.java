@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
                 String zipCode = etZipcode.getText().toString();
                 weatherApi.getWeatherForZipCode(zipCode, new Callback() {
                     @Override
-                    public void success(double response) {
-                        int temperature = (int) (response - 273);
+                    public void success(CurrentWeather weather) {
+                        int temperature = (int) (weather.getTemperature() - 273);
                         tvTemperature.setText(temperature + "");
                     }
 

@@ -34,11 +34,14 @@ public class OpenWeatherMapApi implements WeatherApi {
                             public void onResponse(String response) {
                                 Log.d("example.com response", response);
                                 try {
-                                    JSONObject weather = new JSONObject(response);
-                                    JSONObject main = weather.getJSONObject("main");
+                                    JSONObject jsonWeather = new JSONObject(response);
+                                    JSONObject main = jsonWeather.getJSONObject("main");
                                     Double temperature = main.getDouble("temp");
                                     Log.d("temperature", temperature.toString());
-                                    callback.success(temperature);
+                                    CurrentWeather weather = new CurrentWeather();
+                                    weather.setTemperature(temperature);
+
+                                    callback.success(weather);
                                     // tvTemperature.setText(temperature + "");
                                 } catch (JSONException e) {
                                     callback.error(e.toString());
