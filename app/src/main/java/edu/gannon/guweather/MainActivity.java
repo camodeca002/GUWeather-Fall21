@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void error(String errorMessage) {
                         Toast toast = Toast.makeText(getApplicationContext(),
-                                        errorMessage,
+                                        "Sorry! An error occurred. Try again later.",
                                         Toast.LENGTH_LONG);
                         toast.show();
                     }
