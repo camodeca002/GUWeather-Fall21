@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     // add this comment
     TextView tvTemperature;
+    TextView tvCondition;
     Button btnGetWeather;
     EditText etZipcode;
     RequestQueue queue;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         Context context = getApplicationContext();
         weatherApi = new OpenWeatherMapApi(context);
         tvTemperature  = findViewById(R.id.tvTemperature);
+        tvCondition  = findViewById(R.id.tvCondition);
         etZipcode = findViewById(R.id.etZipcode);
         btnGetWeather = findViewById(R.id.btnGetWeather);
 
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     public void success(CurrentWeather weather) {
                         int temperature = (int) (weather.getTemperature() - 273);
                         tvTemperature.setText(temperature + "");
+                        tvCondition.setText(weather.getCondition());
                     }
 
                     @Override

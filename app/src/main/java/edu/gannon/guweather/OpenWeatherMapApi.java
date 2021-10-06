@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,10 +37,17 @@ public class OpenWeatherMapApi implements WeatherApi {
                                 try {
                                     JSONObject jsonWeather = new JSONObject(response);
                                     JSONObject main = jsonWeather.getJSONObject("main");
-                                    Double temperature = main.getDouble("jkhg");
+                                    Double temperature = main.getDouble("temp");
                                     Log.d("temperature", temperature.toString());
                                     CurrentWeather weather = new CurrentWeather();
                                     weather.setTemperature(temperature);
+
+                                    JSONArray weatherArray =
+                                            jsonWeather.getJSONArray("weather");
+                                    JSONObject weatherObject =
+                                            weatherArray.getJSONObject(0);
+                                    String condition = weatherObject.getString("main");
+                                    weather.setCondition(condition);
 
                                     callback.success(weather);
                                     // tvTemperature.setText(temperature + "");
