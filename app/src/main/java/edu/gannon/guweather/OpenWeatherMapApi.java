@@ -36,7 +36,7 @@ public class OpenWeatherMapApi implements WeatherApi {
                                 try {
                                     JSONObject jsonWeather = new JSONObject(response);
                                     JSONObject main = jsonWeather.getJSONObject("main");
-                                    Double temperature = main.getDouble("temp");
+                                    Double temperature = main.getDouble("jkhg");
                                     Log.d("temperature", temperature.toString());
                                     CurrentWeather weather = new CurrentWeather();
                                     weather.setTemperature(temperature);
@@ -44,14 +44,14 @@ public class OpenWeatherMapApi implements WeatherApi {
                                     callback.success(weather);
                                     // tvTemperature.setText(temperature + "");
                                 } catch (JSONException e) {
-                                    callback.error(e.toString());
+                                    callback.error(ErrorType.JSON);
                                     Log.d("weatherrequestexception", e.toString());
                                 }
                             }
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        callback.error("A network error occurred");
+                        callback.error(ErrorType.NETWORK);
                     }
                 });
         queue.add(stringRequest);

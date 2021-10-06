@@ -53,9 +53,20 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void error(String errorMessage) {
+                    public void error(ErrorType error) {
+                        String errorMessage = "";
+
+                        if (error == ErrorType.NETWORK) {
+                            errorMessage = "Please check your internet connection!";
+                        } else if (error == ErrorType.JSON) {
+                            errorMessage = "Sorry! Please try again in a few minutes!";
+                        } else {
+                            errorMessage = "Sorry! An error occurred! Try again!";
+                        }
+
+
                         Toast toast = Toast.makeText(getApplicationContext(),
-                                        "Sorry! An error occurred. Try again later.",
+                                        errorMessage,
                                         Toast.LENGTH_LONG);
                         toast.show();
                     }
