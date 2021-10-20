@@ -37,9 +37,10 @@ public class OpenWeatherMapApi implements WeatherApi {
                                 try {
                                     JSONObject jsonWeather = new JSONObject(response);
                                     JSONObject main = jsonWeather.getJSONObject("main");
-                                    Double temperature = main.getDouble("temp");
-                                    Log.d("temperature", temperature.toString());
-                                    CurrentWeather weather = new CurrentWeather();
+                                    Double dblTemperature = main.getDouble("temp");
+                                    Log.d("temperature", dblTemperature.toString());
+                                    Weather weather = new Weather();
+                                    Temperature temperature = new Temperature(dblTemperature, TemperatureScale.KELVIN);
                                     weather.setTemperature(temperature);
 
                                     JSONArray weatherArray =

@@ -1,25 +1,14 @@
 package edu.gannon.guweather;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
     TextView tvCondition;
     Button btnGetWeather;
     EditText etZipcode;
-    RequestQueue queue;
     WeatherApi weatherApi;
 
     @Override
@@ -49,9 +37,13 @@ public class MainActivity extends AppCompatActivity {
                 String zipCode = etZipcode.getText().toString();
                 weatherApi.getWeatherForZipCode(zipCode, new Callback() {
                     @Override
-                    public void success(CurrentWeather weather) {
-                        int temperature = (int) (weather.getTemperature() - 273);
-                        tvTemperature.setText(temperature + "");
+                    public void success(Weather weather) {
+                        Temperature temperature = weather.getTemperature();
+                        int temperatureForDisplay =
+                                (int) temperature.convert(
+                                        TemperatureScale.FAHRENHEIT);
+
+                        tvTemperature.setText(temperatureForDisplay + "");
                         tvCondition.setText(weather.getCondition());
                     }
 
@@ -69,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
 
 
                         Toast toast = Toast.makeText(getApplicationContext(),
-                                        errorMessage,
-                                        Toast.LENGTH_LONG);
+                                errorMessage,
+                                Toast.LENGTH_LONG);
                         toast.show();
                     }
                 });

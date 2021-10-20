@@ -1,6 +1,6 @@
 package edu.gannon.guweather;
 
 public interface Callback {
-    void success(CurrentWeather currentWeather);
+    void success(Weather weather);
     void error(ErrorType error);
 }
